@@ -1,0 +1,51 @@
+.\" Process this file with
+.\" groff -Tascii -man /path/tosource/addtodock.1 > outputfile.1
+.\"
+.TH ADDDOCKITEM 1 "22 MAY 2008"
+.SH NAME
+additemtodock - adds documents, folders, files and links to the dock
+.SH SYNOPSIS
+additemtodock [itemtoadd] [itemtoadd]...etc
+.SH DESCRIPTION
+.B
+ADD ITEM TO DOCK
+adds the item(s) passed in as argument(s) to the of the dock. 
+If the items file name ends in .app it will be added to the 
+Applications section of the dock, otherwise it will  be added
+to the other section in the dock.
+
+.SH BUGS
+(1)
+The name is not very good.
+
+(2)
+The dock restarts if one or more 
+arguments are passed into the system, even if nothing has 
+been added to the dock. For Instance the argument passed 
+in did not exist.
+
+(3)
+If the user has added items into the dock
+and they have not been written to disk
+then the changes will be lost when the dock is killed.
+
+.SH AUTHOR
+Henri Shustak
+
+additemtodock is protected by various licenses agreements.
+
+Check http://lucidsystems.org for further details.
+
+.SH CONTRIBUTIONS 
+Christophe Deroulers, http://www.normalesup.org/~deroulers/
+
+
+.SH "SEE ALSO"
+.BR bash (1),
+.BR grep (1),
+.BR defaults (1),
+.BR basename (1),
+.BR echo (1),
+.BR killall (1),
+.BR tail (1),
+.BR awk (1)
