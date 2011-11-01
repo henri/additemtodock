@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<installer-script minSpecVersion="1.000000" authoringTool="com.apple.PackageMaker" authoringToolVersion="3.0.4" authoringToolBuild="179">
+    <title>Dock Package</title>
+    <options customize="allow" allow-external-scripts="no" rootVolumeOnly="false"/>
+    <domains enable_anywhere="true" enable_localSystem="true"/>
+    <choices-outline>
+        <line choice="choice4"/>
+        <line choice="choice5"/>
+    </choices-outline>
+    <choice id="choice4" title="root">
+        <pkg-ref id="nz.school.stmargarets.dockPackage.root.pkg"/>
+    </choice>
+    <choice id="choice5" title="Add Item to Dock">
+        <pkg-ref id="org.lucidsysems.additemtodock"/>
+    </choice>
+    <pkg-ref id="nz.school.stmargarets.dockPackage.root.pkg" installKBytes="24" version="1.0" auth="Root">file:./Contents/Packages/root.pkg</pkg-ref>
+    <pkg-ref id="org.lucidsysems.additemtodock" installKBytes="12" version="0.0.8" auth="Root">file:./Contents/Packages/AddItemToDock.pkg</pkg-ref>
+</installer-script>

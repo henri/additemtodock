@@ -1,0 +1,15 @@
+# Should be available on all machines and will therefore be added to the dock
+# Example : Add Safari
+/Applications/Safari.app
+
+# Dock Link Files (may be managed by radmind or a script)
+# Example : Adds Image Capture if  link is found for this (create and remove links in the file system to alter the item)
+/Library/Additional Files/SystemMaintenance/dock/docklinks/Image Capture.app/
+
+# If these are available on a system then they are added to the dock
+# Example : Adds Sibelius if it is found on the system
+/Applications/Sibelius 4/Sibelius 4.app
+
+# Items placed into the documents side of the dock
+/Developer/About Xcode.app
+

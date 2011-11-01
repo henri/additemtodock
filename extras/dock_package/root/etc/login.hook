@@ -1,0 +1,24 @@
+#! /bin/sh
+
+# calls iHook with the path to the real script
+
+#
+# Henri Shustak Copyright 2006 GNU GPL Version 2
+#
+
+export PATH=/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin
+
+ihook="/Library/Additional Files/AdminApps/iHook/iHook.app/Contents/MacOS/iHook"
+script="/etc/hooks/masterlogin.hook"
+
+if [ ! -x "${script}" ]; then
+    logger -s -p user.info ${script} is not executable. Exiting...
+fi
+
+# run Master Login Script and pass all parameters to the script   
+"${script}" $*
+
+exit_status=$?
+
+
+exit 0

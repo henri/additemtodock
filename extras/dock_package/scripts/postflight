@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# (C)2011
+# Henri Shustak
+# Released under the GNU GPL
+
+# Setup the login hook
+defaults write $3/var/root/Library/Preferences/com.apple.loginwindow LoginHook "/etc/login.hook"

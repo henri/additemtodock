@@ -1,0 +1,66 @@
+#!/bin/bash
+#benchmark --reset #AUTO
+
+# Login Script (not using iHook)
+#
+# runs everything in /etc/hooks/userScripts beginning with UH (for User Hook),
+# similar in design to the SysV rc scripts.
+# 
+# Modified By Henri Shustak, Copyright 2006 GNU GPL v2
+#
+
+#logger -t "XSCRIPT" -p user.notice "Entering Script : $0"
+
+export PATH=/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin
+
+userlogin="${1}"
+USERSCRIPTS="/etc/user-hooks"
+
+# reset working directory 
+
+if [ -d "$USERSCRIPTS" ]; then
+   for userscript in "$USERSCRIPTS/"UHLI*; do
+   if [ -s "$userscript" -a -x "$userscript" ]; then
+	    logger -s -t UserScripts -p user.info Executing "$userscript"... 1>&2
+
+	    # run the item and pass all parameters to the script
+	    # this script will run as the user who is logging in
+	    #echo ${userscript} > /Users/Shared/script-to-run.txt
+	    #/usr/bin/su
+	    
+	    # Store Working Directory
+	    #old_pwd=`pwd`
+	    #cd /
+	    
+	    # Escape any spaces in the name
+        user_script_to_run=`/bin/echo -n $userscript | sed 's/\ /\\\\ /g'`
+	    
+	    # Execute as this user
+	    
+		# Disabled due to possible issue with depreticated option.
+		# /usr/bin/su "$userlogin" -c "$user_script_to_run $*"
+		
+		# Using sudo rather than su -c to see if it helps.
+		/usr/bin/sudo -H -u "${userlogin}" $user_script_to_run $*
+		
+	    if [ $? -ne 0 ]; then
+		  exit_value=$?
+		  logger -s -t UserScripts -p user.info "$user_script_to_run" failed! 1>&2
+		  #benchmark #AUTO
+		  exit $exit_value
+	    fi
+	    
+	    # Restore Working Directory
+	    cd $old_pwd
+	fi
+    done
+fi
+
+echo Login Complete.
+
+#benchmark #AUTO
+exit 0
+
+
+
+#benchmark #AUTO

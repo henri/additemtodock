@@ -1,0 +1,95 @@
+#!/bin/bash
+
+#benchmark --reset #AUTO
+#logger -t "XSCRIPT" -p user.notice "Entering Script : $0"
+
+# (C)2007 Henri Shustak
+# GNU GPL v3
+#
+# This script copies a blank dock to your dock, and adds items to this dock.
+
+testwriteaccessfile=$HOME/Library/.test_write_access
+inputfile="/Library/Additional Files/SystemMaintenance/dock/add_to_dock_list.txt"
+basedock="/Library/Additional Files/SystemMaintenance/dock/base/com.apple.dock.plist"
+userdock=$HOME/Library/Preferences/com.apple.dock.plist
+userdockupdated=$HOME/Library/Preferences/.com.apple.dock.plist.updateded
+current_user=${1}
+
+function setup_dock {
+
+
+    # Determin the OS Version    
+    primary_system_version=`uname -v | awk '{print $4}' | cut -c -1`
+    
+    if [ $primary_system_version -lt 9 ] ; then
+        # Running Pre 10.5
+        local_check=`nicl . -read /users/${current_user} name 2> /dev/null | awk '{print $2}'`
+    else
+        # Running 105 or Later
+        local_check=`dscl . -read /users/${current_user} name 2> /dev/null | awk '{print $2}'`
+    fi
+    
+    # Check if they are actually local....if they are local they will match
+    if [[ "$current_user" == "$local_check" ]]; then
+        #benchmark #AUTO
+        exit 0
+    fi
+
+
+    # Copy the base dock 
+    ditto -rsrc "${basedock}" "${userdock}"
+    
+    # Add items from a file to the dock
+    echo additemtodock `cat "$inputfile" | sed '/^#/d' | sed '/^$/d' | sed 's/^/"/' | sed 's/$/"/'` | bash
+    
+    touch "${userdockupdated}"
+
+}
+
+
+# Skip if inputfile or basedock is not availible
+if ! [ -f "${inputfile}" ] || ! [ -f "${basedock}" ] ; then
+    #benchmark #AUTO
+    exit 0
+fi
+
+# Skip if home is not on within a specific path - and has never been updated - eg - skup some home locations
+# if [ "`echo $HOME | grep -e path-to-your-server`" == "" ] ; then
+#     
+#     # If the dock has not been setup then continue.
+#     # if ! [ -f "${userdockupdated}" ] ; then
+#     #    
+#     #    # Setup using differnt dock settings based upon other informaiton such as data in the NVRAM
+#     #    roomnumber=`nvram asset-name | cut -c 12- | awk 'BEGIN { FS = "-" } ; { print $1 }'`
+#     #    if [ "$roomnumber" == "OTHERDOCK" ] && [ "`whoami`" != "admin" ] ; then
+#     #        You would need to add some dock settings at this path
+#     #        basedock="/Library/Additional Files/SystemMaintenance/dock/other/com.apple.dock.plist"
+#     #        setup_dock
+#     #    fi
+#     #    
+#     # fi
+#     
+#     #benchmark #AUTO
+#     exit 0
+# fi
+
+
+function test_write_access {
+	
+	# Try writting to a file in the users home directory.
+	touch "${testwriteaccessfile}" 2> /dev/null
+	if [ $? != 0 ] ; then
+		echo "                           WARNING! : No write access to user home directory"
+		#benchmark #AUTO
+		exit 0
+	fi		
+	
+}
+
+test_write_access
+setup_dock
+
+#benchmark #AUTO
+exit 0
+
+#benchmark #AUTO

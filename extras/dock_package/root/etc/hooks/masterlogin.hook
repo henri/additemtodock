@@ -1,0 +1,47 @@
+#! /bin/sh
+
+#LEN1=`cat /var/log/timer.log | wc -l`
+#benchmark --reset #AUTO
+#logger -t "XSCRIPT" -p user.notice "Entering Script : $0"
+
+# Login Script (not using iHook)
+#
+# runs everything in /etc/hooks beginning with LI (for LogIn),
+# similar in design to the SysV rc scripts.
+# 
+# Modified By Henri Shustak, Copyright 2006 GNU GPL v2
+#
+
+export PATH=/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin
+
+HOOKSDIR="/etc/hooks"
+
+if [ -d ${HOOKSDIR} ]; then
+    for hook in ${HOOKSDIR}/LI*; do
+	if [ -s ${hook} -a -x ${hook} ]; then
+	    logger -s -t LoginHook -p user.info Executing ${hook}... 1>&2
+
+
+	    # run the item and pass all parameters to the script
+	    ${hook} $*
+	    
+	    if [ $? -ne 0 ]; then
+		exit_value=$?
+		logger -s -t LoginHook -p user.info ${hook} failed! 1>&2
+		#benchmark #AUTO
+		exit $exit_value
+	    fi
+	fi
+    done
+fi
+
+echo Login Complete.
+
+#benchmark #AUTO
+#LEN2=`cat /var/log/timer.log | wc -l` 
+#LEN3=`echo "$LEN2 - $LEN1" | bc`
+#tail -n $LEN3 /var/log/timer.log | post_log -d "Login Benchmark"
+
+
+exit 0
+s
