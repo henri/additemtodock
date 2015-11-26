@@ -1,4 +1,4 @@
-# additemtodock v0.0.8 #
+# additemtodock v0.0.9 #
 
 additemtodock allows you to add items the dock on Mac OS X systems via the command line.
 
