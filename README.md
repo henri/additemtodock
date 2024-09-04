@@ -4,11 +4,11 @@ additemtodock allows you to add items the dock on Mac OS X systems via the comma
 
 Further information including basic and more advanced usage is available via the following URLs: 
 
-Home page : <http://www.lucidsystems.tk/tools/additemtodock>
+Home page : <http://www.lucid.systems/tools/additemtodock>
 
-Introduction : <http://www.lucidsystems.tk/tools/additemtodock/additemtodock_introduction.txt>
+Introduction : <http://www.lucid.systems/tools/additemtodock/additemtodock_introduction.txt>
 
-Usage Tips :  <http://www.lucidsystems.tk/tools/additemtodock/additemtodock_tips.txt>
+Usage Tips :  <http://www.lucid.systems/tools/additemtodock/additemtodock_tips.txt>
 
 
 
